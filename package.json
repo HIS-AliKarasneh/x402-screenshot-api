@@ -1,0 +1,17 @@
+{
+  "name": "x402-screenshot-api",
+  "version": "1.0.0",
+  "description": "Screenshot-as-a-Service: pay-per-request API gated by x402 (USDC on Base)",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "client": "node client-example.mjs"
+  },
+  "dependencies": {
+    "@rail402/x402": "^0.1.1",
+    "express": "^4.19.2",
+    "playwright": "^1.45.0",
+    "viem": "^2.21.26"
+  }
+}
