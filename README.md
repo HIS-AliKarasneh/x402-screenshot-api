@@ -71,34 +71,45 @@ npx playwright install chromium
 PORT=8000 npm start
 ```
 
-### Option C — Railway (one-click, free tier exists)
+### Option C — Railway (recommended, Docker, stable URL)
 
-1. Push this folder to a GitHub repo.
-2. Railway → New Project → Deploy from GitHub.
-3. `Nixpacks` auto-detects Node; add `npx playwright install chromium` as a start build step if needed.
-4. Set env: `PAYOUT_WALLET`, `PRICE=0.05`, `NETWORK=base`.
-5. Public URL is the agent-facing endpoint.
+This repo is already scaffolded for Railway:
 
-## Marketplace listing (drives agent demand)
+- `Dockerfile` — `node:20-slim` + apt `chromium` + `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`; no npm playwright-download step needed.
+- `railway.toml` — Dockerfile builder, healthcheck `/`, restart-on-failure.
 
-Once deployed, list it so agents discover it:
+Deploy steps (≈10 min, human step — no token is stored on this machine):
 
-1. Open `https://rail402.app/publish` (the service run by the SDK authors).
-2. Connect wallet, paste endpoint URL + `/.well-known/agent-services.json`.
-3. Submit for review → appears in marketplace + discovery feed.
+1. Push this folder to a GitHub repo (any fresh public repo is fine):
+   ```bash
+   git add -A && git commit -m "x402 screenshot service"
+   git remote add origin https://github.com/YOUR_USER/x402-screenshot-api.git
+   git push -u origin main
+   ```
+2. Go to [Railway](https://railway.app) → New Project → Deploy from GitHub → pick that repo. Railway detects the Dockerfile automatically.
+3. Add env vars on the service: `PAYOUT_WALLET=0x48B1F6C80Db2386a53278C7b82B71a59D03aCF6F`, `PRICE=0.01`, `NETWORK=base`.
+4. Railway gives a permanent `https://<app>.up.railway.app` URL — save it.
+5. Verify: `curl https://<app>.up.railway.app/api/screenshot` returns `402` with `PAYMENT-REQUIRED`.
 
-Also mirror on **AgentHansa** (quest marketplace, agents pay for tools) and **MoltJobs** (post as a paid tool/service). Both are verified live and pay out to the same wallet.
+That permanent URL is what gets listed in the registries (currently the trycloudflare quick-tunnel URL is temporary and rotates on restart).
+
+## Marketplace listing (live today)
+
+- **PayanAgent** (`payanagent.com`) — offer `kh7a9d7fk7beky2vj8sagf5nd18c7d1g`, $0.01/call, top-ranked, payments route to the payout wallet. Buy URL: `https://payanagent.com/x402/kh7a9d7fk7beky2vj8sagf5nd18c7d1g`.
+- **Agent402 index** (`agent402.tools`) — origin listed, health 1, routable.
+- **Rail402 marketplace** — dashboard + wallet connect (human step; do after stable URL).
+- Registry credentials / offer IDs: see `REGISTRY_LEDGER.md` (kept out of git intentionally — it contains an API key).
 
 ## Economics
 
-- Price: **$0.05 / screenshot** (configurable via `PRICE`).
+- Price: **$0.01 / screenshot** (configurable via `PRICE`), matching the market ($0.002–$0.03 is the going range on PayanAgent's catalog).
 - 0% protocol fee; the SDK's verification is free and on-chain.
-- Break-even vs your $4.50 capital: **1 agent paying for 90 screenshots**, or 10 agents buying a few each.
+- Note: paid calls through the same wallet as `PAYOUT_WALLET` are self-transfers (no net USDC). Demand comes from *other* wallets buying the service.
 
 ## Honest status
 
-- ✅ x402 protocol handshake verified live (402 challenge → terms → payTo your wallet).
-- ✅ PNG capture verified across desktop/tablet/mobile (Playwright, Chromium headless).
-- ✅ Client auto-pay path written against the verified npm SDK.
-- ⏳ Needs deployment to a public URL + marketplace listing for agents to find it (human step, ~10 min on Railway).
-- ⏳ Needs the Base wallet topped with ~$0.30 ETH for outbound gas if you want to *test-pay* it once yourself (not required for the service to earn).
+- ✅ x402 protocol handshake verified live (402 challenge → terms → payTo wallet).
+- ✅ PNG capture verified (Playwright + Chromium) and paid flow proven end-to-end over the public tunnel.
+- ✅ Listed on PayanAgent + Agent402 index today.
+- ⏳ Needs stable URL (Railway, above) to replace the rotating trycloudflare tunnel.
+- ⏳ Until a *foreign* wallet pays, USDC balance won't move (self-tests only bump nonce).
