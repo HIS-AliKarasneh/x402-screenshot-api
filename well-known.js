@@ -1,10 +1,10 @@
 export function agentService(payTo, price, network) {
   return {
     type: "x402",
-    id: "com.hydra.computer",
-    name: "Computer",
+    id: "com.hydra.pagepeek",
+    name: "PagePeek",
     description:
-      "Computer is a pay-per-screenshot API. Any AI agent sends a URL and gets a PNG at desktop, tablet, or mobile width. USDC on Base, x402 micropayment, verified on-chain.",
+      "PagePeek is a pay-per-screenshot API. Any AI agent sends a URL and gets a PNG of the page at desktop, tablet, or mobile width. USDC on Base, x402 micropayment, verified on-chain.",
     price: price,
     currency: "USDC",
     network,

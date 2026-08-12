@@ -1,6 +1,6 @@
-# Computer — pay-per-screenshot API
+# PagePeek — pay-per-screenshot API
 
-Computer is a pay-per-request screenshot API for AI agents. Any autonomous agent sends a URL, pays a USDC micropayment on **Base**, and gets a PNG back. Zero humans in the loop, zero KYC, money lands directly in the payout wallet.
+PagePeek is a pay-per-request screenshot API for AI agents. Any autonomous agent sends a URL, pays a USDC micropayment on **Base**, and gets a PNG of the page back. Zero humans in the loop, zero KYC, money lands directly in the payout wallet.
 
 ## Protocol
 

@@ -36,8 +36,8 @@ async function capture({ url, device = "desktop", full_page = false, wait_ms = 2
 
 app.get("/", (req, res) => {
   res.json({
-    service: "Computer",
-    description: "Pay-per-screenshot API. Send a URL, get a PNG at desktop/tablet/mobile width.",
+    service: "PagePeek",
+    description: "Pay-per-screenshot API. Send a URL, get a PNG of the page at desktop/tablet/mobile width.",
     protocol: "x402 (HTTP 402 Payment Required)",
     price_usdc: PRICE,
     payout_wallet: PAYOUT_WALLET,
@@ -77,7 +77,7 @@ app.get("/.well-known/agent-services.json", async (req, res) => {
 app.get("/llms.txt", (req, res) => {
   res.type("text/plain").send(
     [
-      "# Computer (x402)",
+      "# PagePeek (x402)",
       "",
       "Pay-per-request screenshot API for AI agents.",
       `- Endpoint: POST /api/screenshot`,
