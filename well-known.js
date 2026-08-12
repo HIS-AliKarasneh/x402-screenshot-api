@@ -1,10 +1,10 @@
 export function agentService(payTo, price, network) {
   return {
     type: "x402",
-    id: "com.hydra.screenshot",
-    name: "Screenshot-as-a-Service",
+    id: "com.hydra.computer",
+    name: "Computer",
     description:
-      "Pay-per-screenshot API. Any AI agent sends a URL and gets a PNG at desktop, tablet, or mobile width. USDC on Base, x402 micropayment, verified on-chain.",
+      "Computer is a pay-per-screenshot API. Any AI agent sends a URL and gets a PNG at desktop, tablet, or mobile width. USDC on Base, x402 micropayment, verified on-chain.",
     price: price,
     currency: "USDC",
     network,

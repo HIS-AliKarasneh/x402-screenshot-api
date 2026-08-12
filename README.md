@@ -1,6 +1,6 @@
-# x402 Screenshot-as-a-Service
+# Computer — pay-per-screenshot API
 
-Pay-per-request screenshot API for AI agents. Any autonomous agent sends a URL, pays a USDC micropayment on **Base**, and gets a PNG back. Zero humans in the loop, zero KYC, money lands directly in the payout wallet.
+Computer is a pay-per-request screenshot API for AI agents. Any autonomous agent sends a URL, pays a USDC micropayment on **Base**, and gets a PNG back. Zero humans in the loop, zero KYC, money lands directly in the payout wallet.
 
 ## Protocol
 
@@ -87,7 +87,7 @@ Deploy steps (≈10 min, human step — no token is stored on this machine):
    git push -u origin main
    ```
 2. Go to [Railway](https://railway.app) → New Project → Deploy from GitHub → pick that repo. Railway detects the Dockerfile automatically.
-3. Add env vars on the service: `PAYOUT_WALLET=0x48B1F6C80Db2386a53278C7b82B71a59D03aCF6F`, `PRICE=0.01`, `NETWORK=base`.
+3. Add env vars on the service: `PAYOUT_WALLET=0x48B1F6C80Db2386a53278C7b82B71a59D03aCF6F`, `PRICE=0.015`, `NETWORK=base`.
 4. Railway gives a permanent `https://<app>.up.railway.app` URL — save it.
 5. Verify: `curl https://<app>.up.railway.app/api/screenshot` returns `402` with `PAYMENT-REQUIRED`.
 
@@ -95,14 +95,14 @@ That permanent URL is what gets listed in the registries (currently the trycloud
 
 ## Marketplace listing (live today)
 
-- **PayanAgent** (`payanagent.com`) — offer `kh7a9d7fk7beky2vj8sagf5nd18c7d1g`, $0.01/call, top-ranked, payments route to the payout wallet. Buy URL: `https://payanagent.com/x402/kh7a9d7fk7beky2vj8sagf5nd18c7d1g`.
+- **PayanAgent** (`payanagent.com`) — offer `kh7a9d7fk7beky2vj8sagf5nd18c7d1g`, $0.015/call, top-ranked, payments route to the payout wallet. Buy URL: `https://payanagent.com/x402/kh7a9d7fk7beky2vj8sagf5nd18c7d1g`.
 - **Agent402 index** (`agent402.tools`) — origin listed, health 1, routable.
 - **Rail402 marketplace** — dashboard + wallet connect (human step; do after stable URL).
 - Registry credentials / offer IDs: see `REGISTRY_LEDGER.md` (kept out of git intentionally — it contains an API key).
 
 ## Economics
 
-- Price: **$0.01 / screenshot** (configurable via `PRICE`), matching the market ($0.002–$0.03 is the going range on PayanAgent's catalog).
+- Price: **$0.015 / screenshot** (configurable via `PRICE`), at the market median for screenshot APIs ($0.002–$0.20 range on PayanAgent's catalog).
 - 0% protocol fee; the SDK's verification is free and on-chain.
 - Note: paid calls through the same wallet as `PAYOUT_WALLET` are self-transfers (no net USDC). Demand comes from *other* wallets buying the service.
 
@@ -111,5 +111,5 @@ That permanent URL is what gets listed in the registries (currently the trycloud
 - ✅ x402 protocol handshake verified live (402 challenge → terms → payTo wallet).
 - ✅ PNG capture verified (Playwright + Chromium) and paid flow proven end-to-end over the public tunnel.
 - ✅ Listed on PayanAgent + Agent402 index today.
-- ⏳ Needs stable URL (Railway, above) to replace the rotating trycloudflare tunnel.
+- ✅ Permanent URL live on Railway (`x402-screenshot-api-production.up.railway.app`).
 - ⏳ Until a *foreign* wallet pays, USDC balance won't move (self-tests only bump nonce).

@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json({ limit: "1mb" }));
 
 const PAYOUT_WALLET = process.env.PAYOUT_WALLET || "0x48B1F6C80db2386a53278C7b82B71a59D03aCF6F";
-const PRICE = process.env.PRICE || "0.05";
+const PRICE = process.env.PRICE || "0.015";
 const NETWORK = process.env.NETWORK || "base";
 
 const VIEWPORTS = {
@@ -36,7 +36,8 @@ async function capture({ url, device = "desktop", full_page = false, wait_ms = 2
 
 app.get("/", (req, res) => {
   res.json({
-    service: "Screenshot-as-a-Service",
+    service: "Computer",
+    description: "Pay-per-screenshot API. Send a URL, get a PNG at desktop/tablet/mobile width.",
     protocol: "x402 (HTTP 402 Payment Required)",
     price_usdc: PRICE,
     payout_wallet: PAYOUT_WALLET,
@@ -76,7 +77,7 @@ app.get("/.well-known/agent-services.json", async (req, res) => {
 app.get("/llms.txt", (req, res) => {
   res.type("text/plain").send(
     [
-      "# Screenshot-as-a-Service (x402)",
+      "# Computer (x402)",
       "",
       "Pay-per-request screenshot API for AI agents.",
       `- Endpoint: POST /api/screenshot`,
