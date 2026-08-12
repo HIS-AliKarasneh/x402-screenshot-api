@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json({ limit: "1mb" }));
 
 const PAYOUT_WALLET = process.env.PAYOUT_WALLET || "0x48B1F6C80db2386a53278C7b82B71a59D03aCF6F";
-const PRICE = process.env.PRICE || "0.015";
+const PRICE = process.env.PRICE || "0.02";
 const NETWORK = process.env.NETWORK || "base";
 
 const VIEWPORTS = {

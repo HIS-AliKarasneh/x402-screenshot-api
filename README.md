@@ -34,7 +34,7 @@ Verify the payment wall:
 curl -X POST http://localhost:8000/api/screenshot \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com"}'
-# → 402 x402_payment_required, amount 0.015 USDC, payTo 0x48B1...CF6F
+# → 402 x402_payment_required, amount 0.02 USDC, payTo 0x48B1...CF6F
 ```
 
 ## Paying client (any AI agent)
@@ -60,7 +60,7 @@ All USDC paid by agents lands here. Verify on [Basescan](https://basescan.org/ad
 
 ```bash
 docker build -t x402-screenshot .
-docker run -p 8000:8000 -e PAYOUT_WALLET=0x48B1...CF6F -e PRICE=0.015 x402-screenshot
+docker run -p 8000:8000 -e PAYOUT_WALLET=0x48B1...CF6F -e PRICE=0.02 x402-screenshot
 ```
 
 ### Option B — Node host (native, no Docker)
@@ -87,7 +87,7 @@ Deploy steps (≈10 min, human step — no token is stored on this machine):
    git push -u origin main
    ```
 2. Go to [Railway](https://railway.app) → New Project → Deploy from GitHub → pick that repo. Railway detects the Dockerfile automatically.
-3. Add env vars on the service: `PAYOUT_WALLET=0x48B1F6C80Db2386a53278C7b82B71a59D03aCF6F`, `PRICE=0.015`, `NETWORK=base`.
+3. Add env vars on the service: `PAYOUT_WALLET=0x48B1F6C80Db2386a53278C7b82B71a59D03aCF6F`, `PRICE=0.02`, `NETWORK=base`.
 4. Railway gives a permanent `https://<app>.up.railway.app` URL — save it.
 5. Verify: `curl https://<app>.up.railway.app/api/screenshot` returns `402` with `PAYMENT-REQUIRED`.
 
@@ -95,14 +95,14 @@ That permanent URL is what gets listed in the registries (currently the trycloud
 
 ## Marketplace listing (live today)
 
-- **PayanAgent** (`payanagent.com`) — offer `kh7a9d7fk7beky2vj8sagf5nd18c7d1g`, $0.015/call, top-ranked, payments route to the payout wallet. Buy URL: `https://payanagent.com/x402/kh7a9d7fk7beky2vj8sagf5nd18c7d1g`.
+- **PayanAgent** (`payanagent.com`) — offer `kh7eqh567s3c0fq45gsh14dt118caz73`, $0.02/call, top-ranked, payments route to the payout wallet. Buy URL: `https://payanagent.com/x402/kh7eqh567s3c0fq45gsh14dt118caz73`.
 - **Agent402 index** (`agent402.tools`) — origin listed, health 1, routable.
 - **Rail402 marketplace** — dashboard + wallet connect (human step; do after stable URL).
 - Registry credentials / offer IDs: see `REGISTRY_LEDGER.md` (kept out of git intentionally — it contains an API key).
 
 ## Economics
 
-- Price: **$0.015 / screenshot** (configurable via `PRICE`), at the market median for screenshot APIs ($0.002–$0.20 range on PayanAgent's catalog).
+- Price: **$0.02 / screenshot** (configurable via `PRICE`), at the market median for screenshot APIs ($0.002–$0.20 range on PayanAgent's catalog).
 - 0% protocol fee; the SDK's verification is free and on-chain.
 - Note: paid calls through the same wallet as `PAYOUT_WALLET` are self-transfers (no net USDC). Demand comes from *other* wallets buying the service.
 
