@@ -34,7 +34,7 @@ Verify the payment wall:
 curl -X POST http://localhost:8000/api/screenshot \
   -H "Content-Type: application/json" \
   -d '{"url":"https://example.com"}'
-# → 402 x402_payment_required, amount 0.05 USDC, payTo 0x48B1...CF6F
+# → 402 x402_payment_required, amount 0.015 USDC, payTo 0x48B1...CF6F
 ```
 
 ## Paying client (any AI agent)
@@ -60,7 +60,7 @@ All USDC paid by agents lands here. Verify on [Basescan](https://basescan.org/ad
 
 ```bash
 docker build -t x402-screenshot .
-docker run -p 8000:8000 -e PAYOUT_WALLET=0x48B1...CF6F -e PRICE=0.05 x402-screenshot
+docker run -p 8000:8000 -e PAYOUT_WALLET=0x48B1...CF6F -e PRICE=0.015 x402-screenshot
 ```
 
 ### Option B — Node host (native, no Docker)

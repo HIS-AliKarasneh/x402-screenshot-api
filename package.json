@@ -1,7 +1,7 @@
 {
-  "name": "x402-screenshot-api",
+  "name": "pagepeek-x402",
   "version": "1.0.0",
-  "description": "Screenshot-as-a-Service: pay-per-request API gated by x402 (USDC on Base)",
+  "description": "PagePeek: pay-per-screenshot API gated by x402 (USDC on Base)",
   "type": "module",
   "main": "server.js",
   "scripts": {
