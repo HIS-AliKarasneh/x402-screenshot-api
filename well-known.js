@@ -4,12 +4,15 @@ export function agentService(payTo, price, network) {
     id: "com.hydra.pagepeek",
     name: "PagePeek",
     description:
-      "PagePeek is a pay-per-screenshot API. Any AI agent sends a URL and gets a PNG of the page at desktop, tablet, or mobile width. USDC on Base, x402 micropayment, verified on-chain.",
+      "PagePeek is a pay-per-screenshot API. Any AI agent sends a URL and gets a PNG of the page at desktop, tablet, or mobile width. Pay in USDC on Base (EVM) or Solana mainnet via the Dexter x402 facilitator (fee sponsored).",
     price: price,
     currency: "USDC",
     network,
     chainId: network === "base-sepolia" ? 84532 : 8453,
     payTo,
+    solanaPayTo: "267VqNJSZS2Q9KRKF8tRYeZiwt62gLaG9MaTbQ2PyKGe",
+    solanaNetwork: "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+    facilitator: "https://x402.dexter.cash",
     endpoints: [
       {
         path: "/api/screenshot",

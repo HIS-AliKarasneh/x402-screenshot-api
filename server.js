@@ -194,10 +194,13 @@ app.get("/", (req, res) => {
   res.json({
     service: "PagePeek",
     description: "Pay-per-screenshot API. Send a URL, get a PNG of the page at desktop/tablet/mobile width.",
-    protocol: "x402 (HTTP 402 Payment Required)",
+    protocol: "x402 v2 (HTTP 402 Payment Required)",
     price_usdc: PRICE,
-    payout_wallet: PAYOUT_WALLET,
+    payout_wallet_evm: PAYOUT_WALLET,
+    payout_wallet_solana: SOLANA_PAYOUT_WALLET,
     network: NETWORK,
+    solana_network: SOLANA_NETWORK_CAIP,
+    facilitator: DEXTER_FACILITATOR,
     usage: {
       method: "POST",
       path: "/api/screenshot",
@@ -222,6 +225,18 @@ app.get("/.well-known/x402", (req, res) => {
         payTo: PAYOUT_WALLET,
         description: "Take a screenshot of any URL at desktop/tablet/mobile widths. Returns PNG.",
       },
+      {
+        path: "/api/screenshot",
+        method: "POST",
+        price: PRICE,
+        currency: "USDC",
+        network: "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp",
+        asset: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+        payTo: SOLANA_PAYOUT_WALLET,
+        facilitator: DEXTER_FACILITATOR,
+        feePayer: SOLANA_FEE_PAYER,
+        description: "Take a screenshot of any URL at desktop/tablet/mobile widths. Returns PNG.",
+      },
     ],
   });
 });
@@ -237,9 +252,10 @@ app.get("/llms.txt", (req, res) => {
       "",
       "Pay-per-request screenshot API for AI agents.",
       `- Endpoint: POST /api/screenshot`,
-      `- Price: ${PRICE} USDC (Base)`,
-      `- Pay to: ${PAYOUT_WALLET}`,
-      "Protocol: HTTP 402 (x402). Your agent's x402 client handles payment automatically.",
+      `- Price: ${PRICE} USDC per screenshot`,
+      `- Base (EVM): pay to ${PAYOUT_WALLET} (USDC)`,
+      `- Solana mainnet: pay to ${SOLANA_PAYOUT_WALLET} via https://x402.dexter.cash (fee sponsored, USDC)`,
+      "Protocol: HTTP 402 (x402 v2). Your agent's x402 client handles payment automatically.",
       "",
     ].join("\n")
   );
@@ -374,5 +390,5 @@ app.post("/api/screenshot", async (req, res) => {
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`x402 screenshot API listening on :${PORT}`);
-  console.log(`Payout wallet ${PAYOUT_WALLET} | ${PRICE} USDC/screenshot on ${NETWORK}`);
+  console.log(`Base payout ${PAYOUT_WALLET} | Solana payout ${SOLANA_PAYOUT_WALLET} | ${PRICE} USDC/screenshot`);
 });
